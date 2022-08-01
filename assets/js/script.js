@@ -1,10 +1,16 @@
-var displayTime = document.querySelector("#time");
+//Base variables for functions and reset
 var baseTime = 75;
+var pullQ = 0;
+var score = 0;
+var feedbackEl = document.querySelector("#feedback");
+
+//Timer related variables
+var displayTime = document.querySelector("#time");
 var startButton = document.querySelector("#start");
 var testWrong = document.querySelector("#wrong");
 var testNext = document.querySelector("#next");
-var pullQ = 0;
 
+//Multiple Choice related variables
 var questionText = document.querySelector("#q-text");
 var chooseA = document.querySelector("#a")
 var chooseB = document.querySelector("#b")
@@ -19,6 +25,19 @@ var content = {
     optionD: ["D. ECMAScript", "D. Hosted Technology Moderating Language", "D. Parameter", "D. Creation", "D. Application"]
 };
 
+//Score-related variables
+yourScoreEl = document.querySelector("#your-score")
+
+//Values that need to be reset for each attempt
+function resetAll() {
+    baseTime = 75;
+    pullQ = 0;
+    score = 0;
+    feedbackEl.textContent = "";
+    yourScoreEl.textContent ="";
+}
+
+//Timer function with game completion conditions
 function gameTime() {
     var timeInterval = setInterval(function() {
         baseTime--;
@@ -26,25 +45,32 @@ function gameTime() {
 
         if(baseTime === 0) {
             clearInterval(timeInterval);
+            timeOut();
+        };
+        if(baseTime < 0) {
+            clearInterval(timeInterval);
+            displayTime.textContent = "Finished!"
         };           
     }, 1000);
 };
 
 startButton.addEventListener("click", function() {
+    resetAll();
+    nextQuestion();
     gameTime();
+    
 });
     
 testWrong.addEventListener("click", function() {
-    baseTime -= 10;
+    thatsWrong()
  }); 
 
-function nextQuestion() {
-    console.log(content.question[pullQ]);
-    console.log(content.optionA[pullQ]);
-    console.log(content.optionB[pullQ]);
-    console.log(content.optionC[pullQ]);
-    console.log(content.optionD[pullQ]); 
-    
+function timeOut() {
+    questionText.textContent = ("Your time is up! Press Start to try again")
+}
+
+//Poulates question and answers
+function nextQuestion() { 
     questionText.textContent = (content.question[pullQ]);
     chooseA.textContent = (content.optionA[pullQ]);
     chooseB.textContent = (content.optionB[pullQ]);
@@ -52,48 +78,102 @@ function nextQuestion() {
     chooseD.textContent = (content.optionD[pullQ]); 
 };
 
-nextQuestion()
+// nextQuestion() 
 
-testNext.addEventListener("click", function() {
+//Progresses quiz; pullQ is referenced in other functions
+function moveForward() {
     if (pullQ < (content.question.length)) {
         pullQ++;
         nextQuestion()
-    }
+    };
+    if (pullQ >= (content.question.length)) {
+        gameFinish()
+    };
+}
+
+testNext.addEventListener("click", function() {
+    moveForward();
 });
 
+function gameFinish() {
+    score = baseTime;
+    console.log(score);
+    baseTime = -1;
+    questionText.textContent = ("Congratulations! View and enter your High Score below.");
+    yourScoreEl.textContent = ("Your score is " + score + " points!")
+};
 
+function thatsWrong() {
+    feedbackEl.textContent = ("That was Incorrect! 10 Seconds Lost!");
+    if (baseTime > 10) {
+        baseTime -= 10;
+        };
+    if (baseTime <= 10) {
+            baseTime = 1;
+    };
+};
+
+function thatsRight() {
+    feedbackEl.textContent = ("That was Correct!")
+}
+
+//Multiple-Choice selection, answer verification, and progression
 chooseA.addEventListener("click", function() {
     if (pullQ === 3) {
         console.log("Correct!");
+        thatsRight();
     } else {
         console.log("Incorrect! Lost ten seconds!");
-    }
+        thatsWrong();
+    };
+    moveForward();
 });
 
 chooseB.addEventListener("click", function() {
     if (pullQ === 1 || pullQ === 2) {
         console.log("Correct!");
+        thatsRight();
     } else {
         console.log("Incorrect! Lost ten seconds!");
-    }
+        thatsWrong();
+    };
+    moveForward();
 });
 
 chooseC.addEventListener("click", function() {
     if (pullQ === 4) {
         console.log("Correct!");
+        thatsRight();
     } else {
         console.log("Incorrect! Lost ten seconds!");
+        thatsWrong();
     }
+    moveForward();
 });
 
 chooseD.addEventListener("click", function() {
     console.log(pullQ)
     if (pullQ === 0) {
         console.log("Correct!");
+        thatsRight();
     } else {
         console.log("Incorrect! Lost ten seconds!");
+        thatsWrong();
     }
+    moveForward();;
 });
+
+
+//Really having trouble with local storage and leaderboard. Might not be done before grading
+//Leaving in commented out code to work with later.
+
+// var nicknameEl = document.getElementById("nickname");
+
+// var userInfo = {
+//     username: nicknameEl,
+//     userScore: score
+// };
+
 
 // function keepHighScore() {
 // // var nicknameEl = document.getElementById("nickname");
