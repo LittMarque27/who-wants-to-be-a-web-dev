@@ -11,16 +11,12 @@ var chooseB = document.querySelector("#b")
 var chooseC = document.querySelector("#c")
 var chooseD = document.querySelector("#d")
 
-var checkAnswer = document.querySelectorAll(".press")
-
-var correctAnswer = ("D. ECMAScript" || "B. HyperText Markup Language" || "B. Selector")
-
 var content = {
-    question: ["What is JavaScript’s official name?", "What does HTML stand for?", "What is used to “find” an HTML element in CSS?"],
-    optionA: ["A. Scripting by Java", "A. Hyper-beam Technique Made Learnable", "A. Locator"],
-    optionB: ["B. VecnaScript", "B. HyperText Markup Language", "B. Selector"],
-    optionC: ["C. jQuery", "C. Heuristic Tool Module Language", "C. Specifier"],
-    optionD: ["D. ECMAScript", "D. Hosted Technology Moderating Language", "D. Parameter"]
+    question: ["What is JavaScript’s official name?", "What does HTML stand for?", "What is used to “find” an HTML element in CSS?", "In JavaScript, what is the process of creating a variable?", "What is a block of code designed to execute a specific task in JavaScript?"],
+    optionA: ["A. Scripting by Java", "A. Hyper-beam Technique Made Learnable", "A. Locator", "A. Declaration", "A. Production"],
+    optionB: ["B. VecnaScript", "B. HyperText Markup Language", "B. Selector", "B. Identification", "B. Conjunction"],
+    optionC: ["C. jQuery", "C. Heuristic Tool Module Language", "C. Specifier", "C. Determination", "C. Function"],
+    optionD: ["D. ECMAScript", "D. Hosted Technology Moderating Language", "D. Parameter", "D. Creation", "D. Application"]
 };
 
 function gameTime() {
@@ -67,35 +63,57 @@ testNext.addEventListener("click", function() {
 
 
 chooseA.addEventListener("click", function() {
-    if (chooseA.value === "D. ECMAScript" || chooseA.value === "B. HyperText Markup Language" || chooseA.value === "B. Selector") {
+    if (pullQ === 3) {
         console.log("Correct!");
     } else {
         console.log("Incorrect! Lost ten seconds!");
     }
-})
+});
 
 chooseB.addEventListener("click", function() {
-    if (chooseB.value === "D. ECMAScript" || chooseB.value === "B. HyperText Markup Language" || chooseB.value === "B. Selector") {
+    if (pullQ === 1 || pullQ === 2) {
         console.log("Correct!");
     } else {
         console.log("Incorrect! Lost ten seconds!");
     }
-})
+});
 
 chooseC.addEventListener("click", function() {
-    if (chooseC.value === "D. ECMAScript" || chooseC.value === "B. HyperText Markup Language" || chooseC.value === "B. Selector") {
+    if (pullQ === 4) {
         console.log("Correct!");
     } else {
         console.log("Incorrect! Lost ten seconds!");
     }
-})
-
+});
 
 chooseD.addEventListener("click", function() {
-    if (chooseD.value === "D. ECMAScript" || chooseD.value === "B. HyperText Markup Language" || chooseD.value === "B. Selector") {
+    console.log(pullQ)
+    if (pullQ === 0) {
         console.log("Correct!");
     } else {
         console.log("Incorrect! Lost ten seconds!");
     }
-})
+});
 
+// function keepHighScore() {
+// // var nicknameEl = document.getElementById("nickname");
+// // preventDefault();
+// // var userInput = nicknameEl.value.trim();
+// var userInput = prompt("type name");
+// console.log(userInput, "userInput")
+// var ledger = JSON.parse(localStorage.getItem("saved-items")) || [];
+// var ourStuff = {
+//     username: userInput,
+//     score: baseTime
+// }
+
+// ledger.push(ourStuff)
+// localStorage.setItem("saved-items", JSON.stringify(ledger));
+
+// }
+
+// keepHighScore()
+
+//displayLeaderboard
+//lookup .sort 
+//display content
